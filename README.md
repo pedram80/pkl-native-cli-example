@@ -10,11 +10,27 @@ A simple Java application demonstrating how to use the PKL Core library for conf
 
 ## Project Structure
 
-- `src/main/java/com/example/pkl/PklExample.java`: Main application demonstrating PKL usage
-- `src/main/resources/config.pkl`: Sample PKL configuration file
-- `build.gradle`: Gradle build file with PKL dependencies and GraalVM configuration
-- `reflection-config.json`: GraalVM reflection configuration
-- `resource-config.json`: GraalVM resources configuration
+```
+pkl_example/
+├── build.gradle                     # Gradle build script
+├── gradlew                          # Gradle wrapper
+├── gradle/                          # Gradle wrapper files
+├── resource-config.json             # GraalVM: Includes *.pkl files for native image
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── com/example/pkl/
+│   │   │       ├── SimplePklExample.java # Main application
+│   │   │       └── Config.java           # POJO for config.pkl
+│   │   └── resources/
+│   │       ├── config.pkl                # Example Pkl configuration file
+│   │       └── META-INF/
+│   │           └── native-image/
+│   │               ├── reflect-config.json     # GraalVM: Reflection for Truffle InlineSupport
+│   │               └── native-image.properties # GraalVM: Intentionally empty (see notes)
+│   └── test/
+└── ... (other files)
+```
 
 ## Features Demonstrated
 

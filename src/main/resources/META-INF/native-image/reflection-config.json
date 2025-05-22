@@ -1,9 +1,0 @@
-[
-  {
-    "name": "com.oracle.truffle.api.dsl.InlineSupport$UnsafeField",
-    "fields": [
-      { "name": "declaringClass" }
-    ],
-    "allDeclaredFields": true
-  }
-] 
