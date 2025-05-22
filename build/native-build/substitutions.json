@@ -1,0 +1,11 @@
+[
+  {
+    "name": "com.oracle.truffle.api.dsl.InlineSupport$UnsafeField",
+    "allDeclaredFields": true,
+    "methods": [
+      { "name": "<init>", "parameterTypes": [] }
+    ],
+    "queryAllDeclaredMethods": true,
+    "unsafeAllocated": true
+  }
+]

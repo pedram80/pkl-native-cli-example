@@ -1,0 +1,41 @@
+// Sample PKL configuration
+
+// Define an application configuration
+application {
+  name = "MyApp"
+  version = "1.0.0"
+  
+  // Database configuration
+  database {
+    host = "localhost"
+    port = 5432
+    username = "admin"
+    password = "secret"
+    maxConnections = 20
+  }
+  
+  // Server configuration
+  server {
+    port = 8080
+    host = "0.0.0.0"
+    timeout = 30 // seconds
+  }
+  
+  // Feature flags as string properties
+  feature1 = "auth"
+  feature2 = "api"
+  feature3 = "notifications"
+  
+  // Environment-specific settings
+  environments {
+    development {
+      debug = true
+      logLevel = "DEBUG"
+    }
+    
+    production {
+      debug = false
+      logLevel = "INFO"
+    }
+  }
+} 

@@ -1,0 +1,58 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.graalvm.buildtools.native' version '0.9.28'
+}
+
+group 'com.example.pkl'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 17
+targetCompatibility = 17
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.pkl-lang:pkl-core:0.28.2'
+}
+
+application {
+    mainClass = 'com.example.pkl.SimplePklExample'
+}
+
+// Files needed for native image
+def reflectionConfigFile = file("${projectDir}/reflection-config.json")
+def resourceConfigFile = file("${projectDir}/resource-config.json")
+
+graalvmNative {
+    binaries {
+        main {
+            imageName = 'pkl-example'
+            mainClass = 'com.example.pkl.SimplePklExample'
+            
+            // Force fallback mode is much easier for complex libraries like PKL
+            buildArgs.add('--force-fallback')
+            
+            buildArgs.add('-H:+ReportExceptionStackTraces')
+            buildArgs.add("-H:ReflectionConfigurationFiles=${reflectionConfigFile.absolutePath}")
+            buildArgs.add("-H:ResourceConfigurationFiles=${resourceConfigFile.absolutePath}")
+            
+            // Explicitly unlock experimental options
+            buildArgs.add('-H:+UnlockExperimentalVMOptions')
+            
+            // Allow runtime errors for unsupported elements
+            buildArgs.add('--report-unsupported-elements-at-runtime')
+        }
+    }
+}
+
+// Task to copy all dependencies to build/dependencies folder
+task copyDependencies(type: Copy) {
+    from configurations.runtimeClasspath
+    into 'build/dependencies'
+}
+
+// Hook into build task
+build.dependsOn copyDependencies 
