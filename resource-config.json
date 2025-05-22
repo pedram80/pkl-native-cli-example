@@ -4,9 +4,6 @@
       "pattern": "config.pkl"
     },
     {
-      "pattern": "\\Qconfig.pkl\\E"
-    },
-    {
       "pattern": ".*\\.pkl"
     }
   ],
