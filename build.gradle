@@ -32,13 +32,27 @@ graalvmNative {
             imageName = 'pkl-example'
             mainClass = 'com.example.pkl.SimplePklExample'
             
-            // Force fallback mode is much easier for complex libraries like PKL
-            buildArgs.add('--force-fallback')
+            // Arguments trying to match pkl's direct native-image command line from its buildSrc
+            buildArgs.add('--initialize-at-build-time=') // Empty on purpose, as per pkl build
+            // buildArgs.add('-H:+AllowDeprecatedInitializeAllClassesAtBuildTime') // Let pkl-core.jar handle this if needed
+            buildArgs.add('--no-fallback')
+            // buildArgs.add('--force-fallback') // Replaced by --no-fallback
             
             buildArgs.add('-H:+ReportExceptionStackTraces')
-            buildArgs.add("-H:ReflectionConfigurationFiles=${reflectionConfigFile.absolutePath}")
+            // buildArgs.add("-H:ReflectionConfigurationFiles=${reflectionConfigFile.absolutePath}") // Keep commented, using src/main/resources/META-INF/native-image
             buildArgs.add("-H:ResourceConfigurationFiles=${resourceConfigFile.absolutePath}")
             
+            // Initialize ONLY what pkl build script explicitly adds to command line for runtime init
+            buildArgs.add('--initialize-at-run-time=org.msgpack.core.buffer.DirectBufferAccess')
+            // ALL com.oracle.truffle.api.dsl.InlineSupport... runtime inits REMOVED from command line
+            // Let pkl-core.jar's internal native-image.properties handle Truffle initializations.
+
+            // Remove trace flags
+            // buildArgs.add('--trace-class-initialization=com.oracle.truffle.api.dsl.InlineSupport$UnsafeField')
+            // buildArgs.add('--trace-class-initialization=com.oracle.truffle.api.dsl.InlineSupport$ReferenceField')
+            // buildArgs.add('--trace-class-initialization=com.oracle.truffle.api.dsl.InlineSupport$InlinableField')
+            // buildArgs.add('--trace-class-initialization=com.oracle.truffle.api.dsl.InlineSupport$StateField')
+
             // Explicitly unlock experimental options
             buildArgs.add('-H:+UnlockExperimentalVMOptions')
             

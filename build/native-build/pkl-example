@@ -1,3 +1,0 @@
-#!/bin/sh
-# This is a wrapper script to run the PKL example with JVM
-java -cp "build/libs/pkl_example-1.0-SNAPSHOT.jar:build/dependencies/msgpack-core-0.9.8.jar:build/dependencies/pkl-core-0.28.2.jar:build/dependencies/collections-24.1.2.jar:build/dependencies/graal-sdk-24.1.2.jar:build/dependencies/polyglot-24.1.2.jar:build/dependencies/snakeyaml-engine-2.9.jar:build/dependencies/truffle-api-24.1.2.jar:build/dependencies/nativeimage-24.1.2.jar:build/dependencies/Paguro-3.10.3.jar:build/dependencies/word-24.1.2.jar" com.example.pkl.SimplePklExample "$@"
